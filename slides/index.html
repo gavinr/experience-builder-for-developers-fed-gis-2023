@@ -35,6 +35,10 @@
         /* Section subheader color per theme */
         --r-section-subhead-color: #00fff2;
       }
+
+      .reveal ul {
+        margin-bottom: 20px;
+      }
     </style>
 
     <!-- Theme used for syntax highlighted code -->
@@ -60,23 +64,27 @@
           >
             Gavin Rehkemper
           </p>
-          <p style="text-align: left; font-size: 30px">
+          <p style="margin-top: 100px; text-align: left; font-size: 30px">
             Slides:
-            <a href="http://bit.ly/tbd"><code>http://bit.ly/tbd</code></a>
+            <a href="https://esriurl.com/exb-for-dev-23"
+              ><code>esriurl.com/exb-for-dev-23</code></a
+            >
           </p>
         </section>
 
         <section data-markdown data-background="img/2023/fed/02.png">
           <script type="text/template">
-            ## Content Headline
+            ## Agenda
 
-            - Bullet 1
-            - Bullet 2
-            - Bullet 3
+            - Intro to Experience Builder
+            - Custom widgets
+            - Code collaboration
+            - Deployment
+            - Deployment automation (dev ops)
           </script>
         </section>
 
-        <section data-markdown data-background="img/2023/fed/03.png">
+        <!-- <section data-markdown data-background="img/2023/fed/03.png">
           <script type="text/template">
             ## Content Headline
 
@@ -88,19 +96,399 @@
             alert(`${hello} ${world}!`);
             ```
           </script>
-        </section>
+        </section> -->
 
         <section data-background="img/2023/fed/04.png">
-          <h2 style="text-align: left">Section Title</h2>
-          <p style="text-align: left; color: var(--r-section-subhead-color)">
-            Section Subtitle
-          </p>
+          <h2 style="text-align: left">Intro to Experience Builder</h2>
+        </section>
+
+        <section data-background="img/2023/fed/03.png">
+          <h2>What is ArcGIS Experience Builder</h2>
+          <table>
+            <tr>
+              <td style="width: 50%">
+                <p>
+                  ArcGIS Experience Builder empowers you to quickly transform
+                  your data into compelling web apps and pages
+                </p>
+                <ul>
+                  <li>Start with templates and widgets</li>
+                  <li>Extensibility</li>
+                </ul>
+              </td>
+              <td>
+                <img style="vertical-align: top" src="img/exb-jsapi.png" />
+              </td>
+            </tr>
+          </table>
+        </section>
+
+        <section data-background="img/2023/fed/03.png">
+          <h2>ArcGIS Experience Builder Editions</h2>
+          <table>
+            <tr>
+              <td style="width: 50%; vertical-align: top">
+                <ul>
+                  <li>ArcGIS Online and ArcGIS Enterprise</li>
+                  <ul>
+                    <li>URL: experience.arcgis.com</li>
+                    <li>ArcGIS Enterprise 10.8.1 and up</li>
+                  </ul>
+                </ul>
+                <br /><br /><br />
+                <br /><br /><br />
+                <ul>
+                  <li>Developer Edition</li>
+                  <ul>
+                    <li>
+                      Download from the Developers website and install locally
+                    </li>
+                    <li>Sign in to ArcGIS Online / Enterprise</li>
+                  </ul>
+                </ul>
+              </td>
+              <td style="text-align: center">
+                <img
+                  style="max-height: 400px"
+                  src="img/experience.arcgis.com.png"
+                />
+                <img
+                  style="max-height: 400px"
+                  src="img/developers.arcgis.com.png"
+                />
+              </td>
+            </tr>
+          </table>
         </section>
 
         <section data-background="img/2023/fed/05.png">
-          <h2 style="text-align: right">Demo Title</h2>
+          <h2 style="text-align: right">Run developer edition</h2>
+        </section>
+
+        <section data-background="img/2023/fed/04.png">
+          <h2 style="text-align: left">Custom widgets</h2>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Technologies
+
+            - React
+            - TypeScript
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ![](img/tech.png)
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Widget Structure
+
+            - Widget
+              - dist/
+                - compiled code
+              - src/
+                - runtime/
+                  - widget.tsx
+                  - translations/
+                - setting/
+                  - setting.tsx
+                  - translations/
+              - config.ts
+              - config.json
+              - manifest.json
+          </script>
+        </section>
+
+        <section data-background="img/2023/fed/04.png">
+          <h2 style="text-align: left">Creating a Widget</h2>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Two styles
+
+            ### Class components
+
+            - Make use of ES6 class and extend the component class in React.
+            - Can maintain its own data with state.
+            - Props accessed via this.props.
+            - Uses the render() method.
+
+            ### Function components
+            - Basic JavaScript function
+            - Uses React Hooks to use state and other features.
+            - Can accept and use props.
+            - Simply return what should be rendered
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Create a widget using class component
+
+            ```jsx
+            import { AllWidgetProps, BaseWidget, jsx } from "jimu-core"
+
+            export default class Widget extends BaseWidget<AllWidgetProps, any> {
+              render() {
+                return (
+                  <div className="widget-start jimu-widget" style={{ overflow: "auto" }}>
+                    <p>Hello world!</p>
+                    <p>Widget name: {this.props.label}</p>
+                  </div>
+                )
+              }
+            }
+            ```
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Create a widget using function
+
+            ```jsx
+            import { AllWidgetProps, jsx } from "jimu-core"
+
+            export default function Widget (props: AllWidgetProps) {
+              return <div className="widget-start jimu-widget" style={{ overflow: "auto" }}>
+                <p>Hello world!</p>
+                <p>Widget name: {props.label}</p>
+              </div>
+            }
+            ```
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Comparison
+
+            Class based
+
+            ```jsx
+            import { AllWidgetProps, BaseWidget, jsx } from "jimu-core"
+
+            export default class Widget extends BaseWidget<AllWidgetProps, any> {
+              render() {
+                return (
+                  <div className="widget-start jimu-widget" style={{ overflow: "auto" }}>
+                    <p>Hello world!</p>
+                    <p>Widget name: {this.props.label}</p>
+                  </div>
+                )
+              }
+            }
+            ```
+
+            Function based
+
+            ```jsx
+            import { AllWidgetProps, jsx } from "jimu-core"
+
+            export default function Widget (props: AllWidgetProps) {
+              return <div className="widget-start jimu-widget" style={{ overflow: "auto" }}>
+                <p>Hello world!</p>
+                <p>Widget name: {props.label}</p>
+              </div>
+            }
+            ```
+          </script>
+        </section>
+
+        <section data-background="img/2023/fed/05.png">
+          <h2 style="text-align: right">Demo</h2>
           <p style="text-align: right; color: var(--r-section-subhead-color)">
-            Demo Subtitle
+            Creating a custom widget
+          </p>
+        </section>
+
+        <!-- CODE COLLABORATION SECTION -->
+        <section data-background="img/2023/fed/04.png">
+          <h2 style="text-align: left">Code collaboration</h2>
+          <p style="text-align: left; color: var(--r-section-subhead-color)">
+            With your development team
+          </p>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Web extension repo
+
+            - Folder
+            - Within the `client/` Folder
+            - Contains a `manifest.json` file with the contents:
+
+            ```
+            {
+              "name": "my-web-extension-repo",
+              "type": "exb-web-extension-repo",
+              "description": "This is a sample extension repository.",
+              "copyright": "",
+              "license": ""
+            }
+            ```
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Web extension repo
+
+            - my-web-extension-repo/
+              - manifest.json
+              - themes/
+              - widgets/
+                  - my-custom-widget/
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## The source code repository IS a web extension repo!
+
+            - New team members: clone repository into the `client/` folder
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            More info:
+
+            [developers.arcgis.com/experience-builder/guide/getting-started-widget](https://developers.arcgis.com/experience-builder/guide/getting-started-widget)
+          </script>
+        </section>
+
+        <section data-background="img/2023/fed/04.png">
+          <h2 style="text-align: left">Deployment</h2>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Two patterns
+
+            1. ArcGIS Enterprise
+            2. Developer Edition > host on a web server
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## ArcGIS Enterprise
+
+            1. Deploy custom widgets to Experience Builder within ArcGIS Enterprise
+            2. Users within ArcGIS Enterprise can build Experiences with those custom widgets
+            3. ArcGIS Enterprise 11.0 or higher
+
+            Detailed instructions: [esriurl.com/exb-widget-enterprise](https://esriurl.com/exb-widget-enterprise)
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Developer Edition
+
+            1. Build the Experience with your custom widgets
+            2. Download as ZIP
+
+            ![](img/exb-download.png)
+
+            3. Unzip files
+            4. Add `clientId` to `cdn/1/config.json`
+            5. Host the files on a web server
+          </script>
+        </section>
+
+        <section data-background="img/2023/fed/04.png">
+          <h2 style="text-align: left">Deployment automation</h2>
+          <p style="text-align: left; color: var(--r-section-subhead-color)">
+            Dev ops
+          </p>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Why automation?
+
+            - Faster builds
+            - Consistent builds
+            - Easier for testers
+            - The "reference" application
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## How to automate
+
+            - Store the reference version of each app
+            - Auto-build using your CI/CD env of choice:
+              - Azure DevOps
+              - GitHub Actions*
+              - GitLab Actions
+              - Jenkins
+              - Etc.
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Folder structure
+
+            - manifest.json
+            - apps/
+              - 0/
+              - 1/
+              - 2/
+              - …
+            - widgets/
+              - custom-widget-1/
+              - custom-widget-2/
+              - …
+          </script>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Auto-build
+
+            - Create file:
+
+              `.github/workflows/build-app.yml`
+
+            - Demo repo:
+
+              [github.com/gavinr/experience-builder-devops-example](https://github.com/gavinr/experience-builder-devops-example/)
+          </script>
+        </section>
+
+        <section data-background="img/2023/fed/05.png">
+          <h2 style="text-align: right">Auto-build demo</h2>
+          <p style="text-align: right; color: var(--r-section-subhead-color)">
+            https://github.com/gavinr/experience-builder-devops-example
+          </p>
+        </section>
+
+        <section data-markdown data-background="img/2023/fed/03.png">
+          <script type="text/template">
+            ## Auto-build outcomes
+
+            - Consistent outputs
+            - Easier version management (via Git branching)
+            - Quicker bug investigations (is it happening on the reference app?)
+            - More organized management of app config versions
+          </script>
+        </section>
+
+        <section data-background="img/2023/fed/04.png">
+          <h2 style="text-align: left">Thank you!</h2>
+          <p style="text-align: left; color: var(--r-section-subhead-color)">
+            Questions?
           </p>
         </section>
 
